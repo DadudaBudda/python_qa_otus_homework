@@ -26,17 +26,25 @@ with open('books.json', 'w') as books_json:
 
 with open('books.json') as books_dictionary_json:
     books_data = json.load(books_dictionary_json)
-    result_books = []
     results_users_and_books = []
-    for book in books_data:
-        result_books = []
-        result_books.append({'Title': book["Title"], 'Author': book["Author"], 'Height': book["Height"]})
-        with open('users-39204-8e2f95.json', 'r') as user_json:
-            users_data = json.load(user_json)
-            results_data = []
-            for item in users_data:
-                results_users_and_books.append(
-                    {'name': item["name"], 'gender': item["gender"], 'address': item["address"], 'books': result_books})
+
+with open('users-39204-8e2f95.json', 'r') as user_json:
+    users_data = json.load(user_json)
+
+    for item in users_data:
+        for books in books_data:
+            results_users_and_books.append(
+                    {'name': item["name"],
+                     'gender': item["gender"],
+                     'address': item["address"],
+                     'books': [
+                         {'Title': books["Title"],
+                          'Author': books["Author"],
+                          'Height': books["Height"]
+                          }
+                     ]
+                     }
+            )
 
     with open('users_and_books.json', 'w') as users_and_books:
         json.dump(results_users_and_books, users_and_books, sort_keys=False, indent=2)
