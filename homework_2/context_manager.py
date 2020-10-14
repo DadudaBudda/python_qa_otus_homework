@@ -31,20 +31,19 @@ with open('books.json') as books_dictionary_json:
 with open('users-39204-8e2f95.json', 'r') as user_json:
     users_data = json.load(user_json)
 
-    for item in users_data:
-        for books in books_data:
-            results_users_and_books.append(
-                    {'name': item["name"],
-                     'gender': item["gender"],
-                     'address': item["address"],
-                     'books': [
-                         {'Title': books["Title"],
-                          'Author': books["Author"],
-                          'Height': books["Height"]
-                          }
-                     ]
-                     }
-            )
 
-    with open('users_and_books.json', 'w') as users_and_books:
-        json.dump(results_users_and_books, users_and_books, sort_keys=False, indent=2)
+for item in users_data:
+    for book in books_data:
+        results_users_and_books.append(
+            {'name': item["name"],
+             'gender': item["gender"],
+             'address': item["address"],
+             'books': [
+                 {'Title': book["Title"],
+                  'Author': book["Author"],
+                  'Height': book["Height"]
+                  }]
+             })
+
+with open('users_and_books.json', 'w') as users_and_books:
+    json.dump(results_users_and_books, users_and_books, sort_keys=False, indent=2)
