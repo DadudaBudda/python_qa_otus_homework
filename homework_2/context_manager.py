@@ -31,6 +31,7 @@ with open('books.json') as books_dictionary_json:
 with open('users-39204-8e2f95.json', 'r') as user_json:
     users_data = json.load(user_json)
 
+
 for item in users_data:
     for book in books_data:
         results_users_and_books.append(
