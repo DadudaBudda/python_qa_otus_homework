@@ -1,27 +1,5 @@
 {
-    "$schema": "http://json-schema.org/schema#",
-    "items": {
-        "properties": {
-            "completed": {
-                "type": "boolean"
-            },
-            "id": {
-                "type": "integer"
-            },
-            "title": {
-                "type": "string"
-            },
-            "userId": {
-                "type": "integer"
-            }
-        },
-        "required": [
-            "completed",
-            "id",
-            "title",
-            "userId"
-        ],
-        "type": "object"
-    },
-    "type": "array"
+  "type": "array",
+  "items": {"$ref": "file:homework_REST_API/schema/todo.json"},
+  "additionalProperties": false
 }

@@ -76,68 +76,55 @@ def test_deleting_resource_positive(session, base_url, id):
     assert len(response.json()) == 0
 
 
-@pytest.mark.parametrize('user_id', [-1, 12, 'test', None])
-def test_filter_user_id_negative(session, base_url, user_id):
-    response = session.get(url=f'{base_url}/?userId={user_id}')
-
-    assert response.status_code == 200
-    assert len(response.json()) == 0
-
-
-@pytest.mark.parametrize('item_id', [0, 201, None, 'test'])
-def test_filter_id_negative(session, base_url, item_id):
-    response = session.get(url=f'{base_url}/?id={item_id}')
-
-    assert response.status_code == 200
-    assert len(response.json()) == 0
-
-
-def test_filter_completed_negative(session, base_url):
-    response = session.get(url=f'{base_url}/?completed=')
-
-    assert response.status_code == 200
-    assert len(response.json()) == 0
-
-
-def test_filter_title_negative(session, base_url):
-    response = session.get(url=f'{base_url}/?title=')
-
-    assert response.status_code == 200
-    assert len(response.json()) == 0
-
-
-def test_update_title(session, base_url):
-    id = 1
-    body = {'title': 'asdfg'}
-    response = session.patch(url=f'{base_url}/{id}', json=body)
-
-    assert response.status_code == 200
+@pytest.mark.parametrize('field, value', [("userId", 2),
+                                          ("id", 2),
+                                          ("title", "sed et ea eum"),
+                                          ("completed", 'true'),
+                                          ("completed", 'false')])
+def test_filter(session, base_url, value, field):
+    response = session.get(url=f'{base_url}/?{field}={value}')
     response = response.json()
 
-    assert response['id'] == id
-    assert response['title'] == body['title']
+    if "completed" in field:
+        if value == 'true':
+            value = True
 
-
-def test_patch_user_id(session, base_url):
-    id = 1
-    new_user_id = 2
-    res = session.get(url=f'{base_url}/{id}')
-    body = {'userId': new_user_id}
-    response = session.patch(url=f'{base_url}/{id}', json=body)
-
-    assert res.status_code == 200
-    response_json = response.json()
-
-    assert response_json['id'] == id
-    assert response_json['userId'] == new_user_id
-
-
-def test_patch_todo_id(session, base_url):
-    todo_id = 1
-    new_todo_id = 2
-    body = {'id': new_todo_id}
-    response = session.patch(url=f'{base_url}/{todo_id}', json=body)
+        else:
+            value = False
 
     assert response.status_code == 200
+
+    for _ in response:
+        assert _[field] == value
+
+
+@pytest.mark.parametrize('params',
+                         [{"userId": -1}, {"userId": 12}, {"userId": 'test'},
+                          {"id": 0}, {"id": 201}, {"id": 'test'},
+                          {"title": ""}, {"completed": ""}])
+def test_filter_negative(session, base_url, params):
+    response = session.get(url=f'{base_url}', params=params)
+
+    assert response.status_code == 200
+    assert len(response.json()) == 0
+
+
+@pytest.mark.parametrize('field, value', [("userId", 1),
+                                          ("id", 2),
+                                          ("title", "asdfg"),
+                                          ("completed", True)])
+def test_patch(session, base_url, field, value):
+    todo_id = 0
+    if "id" in field:
+        res = session.get(url=f'{base_url}/{value}')
+
+    else:
+        todo_id = "1"
+        res = session.get(url=f'{base_url}/{todo_id}')
+
+    response = session.patch(url=f'{base_url}/{todo_id}',
+                             json={field: value})
     response_json = response.json()
-    assert response_json['id'] == new_todo_id
+
+    assert res.status_code == 200
+    assert response_json[field] == value
