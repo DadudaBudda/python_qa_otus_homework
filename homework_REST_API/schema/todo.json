@@ -1,0 +1,24 @@
+{
+    "$schema": "http://json-schema.org/schema#",
+    "properties": {
+        "completed": {
+            "type": "boolean"
+        },
+        "id": {
+            "type": "integer"
+        },
+        "title": {
+            "type": "string"
+        },
+        "userId": {
+            "type": "integer"
+        }
+    },
+    "required": [
+        "completed",
+        "id",
+        "title",
+        "userId"
+    ],
+    "type": "object"
+}

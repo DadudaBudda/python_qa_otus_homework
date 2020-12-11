@@ -7,8 +7,7 @@ class Figure:
         self.sum_figures = None
         self.name = name
         self.angles = angles
-        self.perimeter = perimeter
-        self.area = area
+
         self.radius = radius
 
     def get_name(self):
@@ -29,14 +28,16 @@ class Triangle(Figure):
         self.a = a
         self.b = b
 
+    @property
     def find_perimeter(self):
         c = math.sqrt(self.a ** 2 + self.b ** 2)
         perimeter = self.a + self.b + c
-        return perimeter
+        return int(perimeter)
 
+    @property
     def find_area(self):
-        self.area = 0.5 * self.a * self.b
-        return self.area
+        area = 0.5 * self.a * self.b
+        return int(area)
 
 
 class Rectangle(Figure):
@@ -48,13 +49,15 @@ class Rectangle(Figure):
         if a == b:
             raise ValueError('Одна сторона фигуры должна быть больше другой')
 
+    @property
     def find_perimeter(self):
-        self.perimeter = 2 * self.a + 2 * self.b
-        return self.perimeter
+        perimeter = 2 * self.a + 2 * self.b
+        return int(perimeter)
 
+    @property
     def find_area(self):
-        self.area = self.a * self.b
-        return self.area
+        area = self.a * self.b
+        return int(area)
 
 
 class Square(Figure):
@@ -63,13 +66,15 @@ class Square(Figure):
         super().__init__(name='Square', angles=4)
         self.a = a
 
+    @property
     def find_perimeter(self):
-        self.perimeter = 4 * self.a
-        return self.perimeter
+        perimeter = 4 * self.a
+        return int(perimeter)
 
+    @property
     def find_area(self):
-        self.area = self.a ** 2
-        return self.area
+        area = self.a ** 2
+        return int(area)
 
 
 class Circle(Figure):
@@ -78,10 +83,12 @@ class Circle(Figure):
         super().__init__(name='Circle', angles=0)
         self.radius = radius
 
+    @property
     def find_perimeter(self):
-        self.perimeter = self.radius * 2 * math.pi
-        return self.perimeter
+        perimeter = self.radius * 2 * math.pi
+        return int(perimeter)
 
+    @property
     def find_area(self):
-        self.area = self.radius ** 2 * math.pi
-        return self.area
+        area = self.radius ** 2 * math.pi
+        return int(area)
