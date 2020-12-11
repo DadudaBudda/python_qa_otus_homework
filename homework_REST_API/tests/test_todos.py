@@ -83,7 +83,7 @@ def test_deleting_resource_positive(session, base_url, id):
                                           ("completed", 'false')])
 def test_filter(session, base_url, value, field):
     response = session.get(url=f'{base_url}/?{field}={value}')
-    response = response.json()
+    response_json = response.json()
 
     if "completed" in field:
         if value == 'true':
@@ -94,7 +94,7 @@ def test_filter(session, base_url, value, field):
 
     assert response.status_code == 200
 
-    for _ in response:
+    for _ in response_json:
         assert _[field] == value
 
 
