@@ -1,6 +1,7 @@
 import pytest
 import requests
 
+ALL_TODOS=200
 
 def pytest_addoption(parser):
     parser.addoption(

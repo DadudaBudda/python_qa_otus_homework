@@ -1,7 +1,7 @@
 import math
 import pytest
 
-from homework_Selenium.conftest import ALL_TODOS
+from homework_REST_API.conftest import ALL_TODOS
 
 
 def test_listing_all_positive(session, base_url):
