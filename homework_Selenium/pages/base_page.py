@@ -126,7 +126,7 @@ class BasePage:
             assert self.wait_for_element(BasePageLocators.ALERT_SUCCESS) is not None
 
     def get_alert_text(self):
-        with allure.step(f'Текст аллерта {self.get_alert_text()}'):
+        with allure.step(f'Текст аллерта {self.wait_for_element(BasePageLocators.ALERT_SUCCESS).text}'):
             return self.wait_for_element(BasePageLocators.ALERT_SUCCESS).text
 
     def is_text_in_alert(self, text):
