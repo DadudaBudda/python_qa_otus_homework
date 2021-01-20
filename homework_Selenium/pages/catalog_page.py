@@ -26,7 +26,7 @@ class CatalogPage(BasePage):
         try:
             item = items[item_num]
         except IndexError:
-            raise NoSuchElementException(f"No itme with number {item_num}")
+            raise NoSuchElementException(f"No item with number {item_num}")
         return item
 
     def get_item_price(self, item_num=0):
